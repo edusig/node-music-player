@@ -5,13 +5,16 @@ var fs = require('fs')
 
 app.get('/', function(req, res) {
     const tracks = fs.readdirSync(path.join(__dirname, 'tracks')).map(file => {
+        if(file == '.keep') {
+            return
+        }
         return `
     <div class="track">
         <div>
-            <p>${file}</p>
+            <h3>${file}</h3>
         </div>
         <div>
-            <audio controls>
+            <audio controls style="width: 100%">
                 <source src="/${file}" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
@@ -23,10 +26,10 @@ app.get('/', function(req, res) {
             <head>
                 <title>Music Player</title>
             </head>
-            <body>
+            <body style="text-align:center;">
                 <h1>Music Player</h1>
                 <h2>Put files on the tracks directory to see them here</h2>
-                ${tracks}
+                ${tracks.join('')}
             </body>
         </html>
     `)
